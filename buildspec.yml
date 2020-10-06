@@ -7,6 +7,7 @@ phases:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
       - export IMAGE_REPO_NAME="ci-test/test-app"
       - export IMAGE_TAG="0.1.0"
+      - export AWS_ACCOUNT_ID="899864473854"
   build:
     commands:
       - echo Build started on `date`
