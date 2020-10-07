@@ -43,7 +43,7 @@ phases:
       - echo $IMAGE_TAG > VERSION.txt
       - git add VERSION.txt
       - cd /opt/test-app-ops/kustomize/prod
-      - kustomize edit set image test-app=$IMAGE_REPO_NAME:$IMAGE_TAG
+      - kustomize edit set image test-app=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - git add .
       - git commit -m "Bump version to $IMAGE_TAG" --author "CodeBuild <pyunghyuk@likelion.net>"
       - git push origin master
