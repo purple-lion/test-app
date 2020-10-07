@@ -22,6 +22,11 @@ phases:
       - echo $GITHUB_SSH_KEY | jq -r .id_rsa > ~/.ssh/id_rsa
       - echo $GITHUB_SSH_KEY | jq -r '.["id_rsa.pub"]' > ~/.ssh/id_rsa.pub
       - chmod 400 ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
+      - ls -l ~/.ssh
+      - echo 'id_rsa'
+      - cat ~/.ssh/id_rsa
+      - echo 'id_rsa.pub'
+      - cat ~/.ssh/id_rsa.pub
       - ssh -T git@github.com
       - git clone git@github.com:purple-lion/test-app-ops.git /opt/test-app-ops
   build:
