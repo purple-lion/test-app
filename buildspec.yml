@@ -17,7 +17,8 @@ phases:
       - echo GITHUB_SSH_KEY $GITHUB_SSH_KEY
       - echo $GITHUB_SSH_KEY > ~/.ssh/id_rsa
       - chmod 400 ~/.ssh/id_rsa
-      - cat ~/.ssh/id_rsa
+      - ssh -T git@github.com
+      - git clone git@github.com:purple-lion/test-app-ops.git /opt/test-app-ops
   build:
     commands:
       - echo Build started on `date`
@@ -32,3 +33,9 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - echo Update change to test-app-ops
+      - cd /opt/test-app-ops
+      - echo $IMAGE_TAG > VERSION.txt
+      - git add VERSION.txt
+      - git commit -m "Bump version to $IMAGE_TAG" --author "CodeBuild <pyunghyuk@likelion.net>"
+      - git push origin master
