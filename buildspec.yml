@@ -4,8 +4,8 @@ env:
     AWS_ACCOUNT_ID: "899864473854"
     IMAGE_REPO_NAME: "ci-test/test-app"
   secrets-manager:
-    GITHUB_SSH_ID_RSA: "github/ssh-key:id_rsa"
-    GITHUB_SSH_ID_RSA_PUB: "github/ssh-key:id_rsa.pub"
+    GITHUB_SSH_ID_RSA: "github/ssh-key/id_rsa"
+    GITHUB_SSH_ID_RSA_PUB: "github/ssh-key/id-rsa-pub"
 
 phases:
   install:
