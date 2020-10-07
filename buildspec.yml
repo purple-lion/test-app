@@ -4,7 +4,8 @@ env:
     AWS_ACCOUNT_ID: "899864473854"
     IMAGE_REPO_NAME: "ci-test/test-app"
   secrets-manager:
-    GITHUB_SSH_KEY: "github/ssh-key"
+    GITHUB_SSH_ID_RSA: "github/ssh-key:id_rsa"
+    GITHUB_SSH_ID_RSA_PUB: "github/ssh-key:id_rsa.pub"
 
 phases:
   install:
@@ -18,12 +19,12 @@ phases:
       - echo check files from ~/.ssh
       - ls -l ~/.ssh
       - echo Parsing the SSH key..
+      - env | sort
       - echo GITHUB_SSH_KEY $GITHUB_SSH_KEY
-      - echo $GITHUB_SSH_KEY | jq -r .id_rsa > ~/.ssh/id_rsa
-      - echo $GITHUB_SSH_KEY | jq -r '.["id_rsa.pub"]' > ~/.ssh/id_rsa.pub
+      - echo $GITHUB_SSH_ID_RSA > ~/.ssh/id_rsa
+      - echo $GITHUB_SSH_ID_RSA_PUB > ~/.ssh/id_rsa.pub
       - chmod 400 ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
       - ls -l ~/.ssh
-      - env | sort
       - echo 'id_rsa'
       - cat ~/.ssh/id_rsa
       - echo 'id_rsa.pub'
