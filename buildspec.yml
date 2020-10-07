@@ -7,6 +7,10 @@ env:
     GITHUB_SSH_KEY: "github/ssh-key"
 
 phases:
+  install:
+    commands:
+      - apt-get update
+      - apt-get install -y jq
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -15,8 +19,9 @@ phases:
       - ls -l ~/.ssh
       - echo Parsing the SSH key..
       - echo GITHUB_SSH_KEY $GITHUB_SSH_KEY
-      - echo $GITHUB_SSH_KEY > ~/.ssh/id_rsa
-      - chmod 400 ~/.ssh/id_rsa
+      - echo $GITHUB_SSH_KEY | jq -r .id_rsa > ~/.ssh/id_rsa
+      - echo $GITHUB_SSH_KEY | jq -r '.["id_rsa.pub"]' > ~/.ssh/id_rsa.pub
+      - chmod 400 ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
       - ssh -T git@github.com
       - git clone git@github.com:purple-lion/test-app-ops.git /opt/test-app-ops
   build:
