@@ -5,32 +5,24 @@ env:
     IMAGE_REPO_NAME: "ci-test/test-app"
   secrets-manager:
     GITHUB_SSH_ID_RSA: "github/ssh-key/id_rsa"
-    GITHUB_SSH_ID_RSA_PUB: "github/ssh-key/id-rsa-pub"
 
 phases:
-  install:
-    commands:
-      - apt-get update
-      - apt-get install -y jq
+  # install:
+  #   commands:
+  #     - apt-get update
+  #     - apt-get install -y jq
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR...
-      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
-      - echo check files from ~/.ssh
-      - ls -l ~/.ssh
       - echo Parsing the SSH key..
       - env | sort
-      - echo GITHUB_SSH_KEY $GITHUB_SSH_KEY
       - echo $GITHUB_SSH_ID_RSA > ~/.ssh/id_rsa
-      - echo $GITHUB_SSH_ID_RSA_PUB > ~/.ssh/id_rsa.pub
-      - chmod 400 ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
+      - chmod 400 ~/.ssh/id_rsa 
       - ls -l ~/.ssh
-      - echo 'id_rsa'
       - cat ~/.ssh/id_rsa
-      - echo 'id_rsa.pub'
-      - cat ~/.ssh/id_rsa.pub
       - ssh -T git@github.com
       - git clone git@github.com:purple-lion/test-app-ops.git /opt/test-app-ops
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
       - echo Build started on `date`
