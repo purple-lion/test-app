@@ -20,6 +20,8 @@ phases:
       - ls -l ~/.ssh
       - cat ~/.ssh/id_rsa
       # - ssh -T git@github.com
+      - git config --global user.email "pyunghyuk@likelion.net"
+      - git config --global user.name "Pyunghyuk Yoo"
       - git clone git@github.com:purple-lion/test-app-ops.git /opt/test-app-ops
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
